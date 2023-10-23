@@ -18,4 +18,4 @@ runs:
 
     - name: Run user script
       shell: bash
-      run: source index.sh && ${{ inputs.script }}
+      run: source index.sh && config_github_token && ${{ inputs.script }}
