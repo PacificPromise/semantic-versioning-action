@@ -1,0 +1,21 @@
+name: "Semantic Version Action (SVA)"
+description: "Semantic version without any version file"
+
+inputs:
+  script:
+    description: "Script to run"
+    required: true
+    default: "health_check"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Init SVA
+      shell: bash
+      run: |
+        source index.sh
+        health_check.
+
+    - name: Run user script
+      shell: bash
+      run: ${{ inputs.script }}
