@@ -1,4 +1,16 @@
-on: [push]
+on:
+  workflow_dispatch:
+    inputs:
+      BUILD_ENVIRONMENT_NAME:
+        description: "Environment"
+        required: true
+        default: "development"
+        type: choice
+        options:
+          - development
+          - staging
+          - uat
+          - production
 
 jobs:
   hello_world_job:
@@ -11,4 +23,4 @@ jobs:
       - name: Install panda script
         uses: /tuanngocptn/semantic-versioning-action@main
         with:
-          script: health_check
+          script: increment
