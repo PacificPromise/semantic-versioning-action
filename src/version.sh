@@ -1,26 +1,3 @@
-create_tag() {
-  TAG_NAME=$1
-  {
-    git tag -a $TAG_NAME -m "New version for $TAG_NAME" &&
-      git push origin $TAG_NAME
-  } || {
-    git tag -d $TAG_NAME
-  }
-}
-
-delete_tag() {
-  git tag -d "$1"
-  git push --delete origin "$1"
-}
-
-remove_all_tag() {
-  git fetch --all --tags
-  git push origin --delete $(git tag -l)
-  git tag -d $(git tag -l)
-}
-health_check() {
-  echo "Semantic Version Action (SVA) is Ok"
-}
 split_version() {
   TAG_NAME=$1
   VERSION_TYPE=$2 # full, all, major, minor, patche, increment_patche, build, increment_build
