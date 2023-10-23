@@ -14,7 +14,7 @@ runs:
       shell: bash
       run: |
         source index.sh
-        health_check.
+        health_check
 
     - name: Run user script
       shell: bash
