@@ -15,7 +15,7 @@ on:
           - production
 
 env:
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  GITHUB_TOKEN: ${{ secrets.PAT }}
 
 jobs:
   hello_world_job:

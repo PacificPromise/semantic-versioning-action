@@ -1,4 +1,4 @@
-name: Deployment
+name: Dummy Deployment
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 jobs:
   hello_world_job:
     runs-on: ubuntu-latest
-    name: SVA ubuntu check
+    name: Dummy Deployment
     steps:
       - name: Checkout
         uses: actions/checkout@v3
