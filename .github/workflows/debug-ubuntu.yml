@@ -1,3 +1,5 @@
+name: Debug ubuntu
+
 on:
   workflow_dispatch:
     inputs:
