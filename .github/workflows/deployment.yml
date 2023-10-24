@@ -34,4 +34,4 @@ jobs:
           echo "a" | grep a
           abc=$(git tag --sort=-version:refname -l)
           echo $abc
-          echo $abc | grep -P "v\d"
+          echo $abc | grep -P "v\d\+\.\d\+\.\d\+$"
