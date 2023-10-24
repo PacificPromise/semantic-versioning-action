@@ -3,25 +3,23 @@ name: Debug ubuntu
 on:
   workflow_dispatch:
     inputs:
-      BUILD_ENVIRONMENT_NAME:
+      build_environment_name:
         description: "Environment"
-        required: true
-        default: "development"
+        default: "dev"
         type: choice
         options:
           - dev
           - stg
           - uat
           - prd
-          - " "
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
-  hello_world_job:
+  increment-normal:
     runs-on: ubuntu-latest
-    name: SVA ubuntu check
+    name: SVA increment normal
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -30,3 +28,16 @@ jobs:
         uses: /tuanngocptn/semantic-versioning-action@main
         with:
           script: increment
+
+  increment-env:
+    name: SVA increment environment
+    if: ${{ inputs.build_environment_name }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install script
+        uses: /tuanngocptn/semantic-versioning-action@main
+        with:
+          script: increment ${{ inputs.build_environment_name }}
