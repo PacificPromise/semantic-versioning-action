@@ -30,5 +30,4 @@ jobs:
           }
           git fetch --all --tags
           git tag --sort=-version:refname -l |  grep "v\d\+\.\d\+\.\d\+$" | head -n 1 ||
-            git tag --sort=-version:refname -l | grep -P "v\d+\.\d+\.\d+$" | head -n 1 ||
-            echo ""
+            git tag --sort=-version:refname -l | grep -P "v\d+\.\d+\.\d+$" | head -n 1
