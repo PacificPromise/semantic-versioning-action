@@ -40,7 +40,7 @@ increment() {
   git fetch --all --tags
   STAGE=$1
   if ! [ "$STAGE" ]; then
-    PREIOUS_TAG=$(git tag --sort=-version:refname -l | grep -p 'v\d\+\.\d\+\.\d\+$' | head -n 1 || echo "")
+    PREIOUS_TAG=$(git tag --sort=-version:refname -l | grep 'v\d\+\.\d\+\.\d\+$' | head -n 1 || echo "")
     if ! [ "$PREIOUS_TAG" ]; then
       create_tag v0.0.1 # v0.0.1 is init tag
       exit 0
@@ -52,17 +52,18 @@ increment() {
   else
     MAIN_TAG=$(git tag --sort=-version:refname -l | grep 'v\d\+\.\d\+\.\d\+$' | head -n 1 || echo "")
     if ! [ "$MAIN_TAG" ]; then
-      create_tag v0.0.1 # v0.0.1-dev+1 is init tag
+      create_tag v0.0.1 # v0.0.1 is init tag
       MAIN_TAG=$(git tag --sort=-version:refname -l | grep 'v\d\+\.\d\+\.\d\+$' | head -n 1 || echo "")
     fi
-    MAIN_TAG=$(split_version $MAIN_TAG increment_patche)
+    echo $MAIN_TAG
+    MAIN_TAG_INCREMENT_PATCHE=$(split_version $MAIN_TAG increment_patche)
 
-    STAGE_TAG_LATEST=$(git tag --sort=-version:refname -l "v${MAIN_TAG}-${STAGE}+*" | head -n 1)
+    STAGE_TAG_LATEST=$(git tag --sort=-version:refname -l "v${MAIN_TAG_INCREMENT_PATCHE}-${STAGE}+*" | head -n 1)
     STAGE_BUILD_NUMBER=1
     if [ "$STAGE_TAG_LATEST" ]; then
       STAGE_BUILD_NUMBER=$(split_version $STAGE_TAG_LATEST increment_build)
     fi
-    NEW_TAG="v${MAIN_TAG}-${STAGE}+${STAGE_BUILD_NUMBER}"
+    NEW_TAG="v${MAIN_TAG_INCREMENT_PATCHE}-${STAGE}+${STAGE_BUILD_NUMBER}"
     create_tag $NEW_TAG
     exit 0
   fi
