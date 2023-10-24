@@ -71,7 +71,7 @@ split_version() {
 }
 
 increment() {
-  # git fetch --all --tags
+  git fetch --all --tags
   PREIOUS_MAIN_TAG=$(git tag --sort=-version:refname -l "v*" | head -n 1)
 
   if ! [ "$PREIOUS_MAIN_TAG" ]; then
