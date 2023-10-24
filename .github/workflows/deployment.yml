@@ -21,8 +21,8 @@ jobs:
           bash build.sh
           source index.sh
           config_github_token
+          git add index.sh
           { 
-            git add index.sh &&
             git commit -m "build: Automation Deployment" &&
             git push origin main
           } || {
