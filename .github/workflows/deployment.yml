@@ -29,4 +29,9 @@ jobs:
             echo "Do nothing"
           }
           git fetch --all --tags
-          git tag --sort=-version:refname -l | grep -P "v\d+\.\d+\.\d+$" | head -n 1
+
+          if [[ $OSTYPE == 'darwin'* ]]; then
+            git tag --sort=-version:refname -l |  grep "v\d\+\.\d\+\.\d\+$" | head -n 1
+          else
+            git tag --sort=-version:refname -l | grep -P "v\d+\.\d+\.\d+$" | head -n 1
+          fi
