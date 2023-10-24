@@ -28,7 +28,9 @@ jobs:
           } || {
             echo "Do nothing"
           }
-          git fetch
+          echo 1
+          git fetch --all --tags
+          echo 2
           echo "a" | grep a
           abc=$(git tag --sort=-version:refname -l)
           echo $abc
