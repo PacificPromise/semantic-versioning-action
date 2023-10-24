@@ -52,8 +52,8 @@ increment() {
   else
     MAIN_TAG=$(git tag --sort=-version:refname -l | grep 'v\d\+\.\d\+\.\d\+$' | head -n 1 || echo "")
     if ! [ "$MAIN_TAG" ]; then
-      create_tag v0.0.1 # v0.0.1 is init tag
-      MAIN_TAG=$(git tag --sort=-version:refname -l | grep 'v\d\+\.\d\+\.\d\+$' | head -n 1 || echo "")
+      MAIN_TAG=v0.0.1 # v0.0.1 is init tag
+      create_tag $MAIN_TAG
     fi
     echo $MAIN_TAG
     MAIN_TAG_INCREMENT_PATCHE=$(split_version $MAIN_TAG increment_patche)
