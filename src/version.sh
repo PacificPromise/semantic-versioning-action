@@ -5,7 +5,6 @@ split_version() {
   VERSION_NAME_PATH=($(grep -oE '[a-z,0-9,-.+]*' <<<"$TAG_NAME"))
   ARRAY_SIZE=${#VERSION_NAME_PATH[@]}
   VERSION=${VERSION_NAME_PATH[$((ARRAY_SIZE - 1))]}
-  # ENVIRONMENT=${VERSION_NAME_PATH[$((ARRAY_SIZE - 2))]}
   VERSION_ARRAY=($(grep -oE '[0-9]*' <<<"$VERSION"))
 
   case $VERSION_TYPE in
@@ -34,49 +33,40 @@ split_version() {
   increment_build)
     echo ${VERSION_ARRAY[3]} + 1 | bc
     ;;
-  environment)
-    echo ${ENVIRONMENT}
-    ;;
   esac
 }
 
 increment() {
   git fetch --all --tags
-  PREIOUS_MAIN_TAG=$(git tag --sort=-version:refname -l "v*" | head -n 1)
+  STAGE=$1
+  if [[ ! "$STAGE" ]]; then
+    PREIOUS_TAG=$(git tag --sort=-version:refname -l | grep 'v\d\+\.\d\+\.\d\+$' | head -n 1)
 
-  if ! [ "$PREIOUS_MAIN_TAG" ]; then
-    create_tag v0.0.1 # v0.0.1 is init tag
+    if ! [ "$PREIOUS_TAG" ]; then
+      create_tag v0.0.1 # v0.0.1 is init tag
+      exit 0
+    fi
+
+    NEW_TAG="v$(split_version $PREIOUS_TAG increment_patche)"
+    create_tag $NEW_TAG
+    exit 0
+  else
+    PREIOUS_TAG=$(git tag --sort=-version:refname -l "*-${STAGE}+*" | head -n 1)
+    if ! [ "$PREIOUS_TAG" ]; then
+      create_tag 'v0.0.1-dev+1' # v0.0.1-dev+1 is init tag
+      exit 0
+    fi
+
+    MAIN_TAG=$(git tag --sort=-version:refname -l | grep 'v\d\+\.\d\+\.\d\+$' | head -n 1)
+    MAIN_TAG=$(split_version $MAIN_TAG increment_patche)
+
+    STAGE_TAG_LATEST=$(git tag --sort=-version:refname -l "v${MAIN_TAG}-${STAGE}+*" | head -n 1)
+    STAGE_BUILD_NUMBER=1
+    if [[ $STAGE_TAG_LATEST ]]; then
+      STAGE_BUILD_NUMBER=$(split_version $STAGE_TAG_LATEST increment_build)
+    fi
+    NEW_TAG="v${MAIN_TAG}-${STAGE}+${STAGE_BUILD_NUMBER}"
+    create_tag $NEW_TAG
     exit 0
   fi
-  # STAGE=$2
-  # if [[ ! "$STAGE" ]]; then
-  #   exit "Missing STAGE environment"
-  # fi
-  # PREFIX=''
-  # if [[ "$1" ]]; then
-  #   PREFIX="$1/"
-  # fi
-  # PREIOUS_MAIN_TAG=$(git tag --sort=-version:refname -l "${PREFIX}production/*" | head -n 1)
-
-  NEW_TAG="v$(split_version $PREIOUS_MAIN_TAG increment_patche)"
-  create_tag $NEW_TAG
-
-  # create_tag $NEW_TAG
-
-  # if [[ "$STAGE" == "production" ]]; then
-  #   PREIOUS_MAIN_TAG_FULL=$(split_version $PREIOUS_MAIN_TAG full)
-  #   PRO_BUILD_NUMBER=$(split_version $PREIOUS_MAIN_TAG build)
-  #   PRO_BUILD_NUMBER_INCREMENT=$((PRO_BUILD_NUMBER + 1))
-  #   NEW_TAG="${PREFIX}production/v${PREIOUS_MAIN_TAG_FULL}+${PRO_BUILD_NUMBER_INCREMENT}"
-  # else
-  #   STAGE_TAG=$(git tag --sort=-version:refname -l "${PREFIX}${STAGE}/*" | head -n 1)
-  #   STAGE_TAG_FULL=$(split_version $PREIOUS_MAIN_TAG increment_patche)
-  #   STAGE_TAG_LATEST=$(git tag --sort=-version:refname -l "${PREFIX}${STAGE}/v${STAGE_TAG_FULL}+*" | head -n 1)
-  #   STAGE_BUILD_NUMBER=1
-  #   if [[ $STAGE_TAG_LATEST ]]; then
-  #     STAGE_BUILD_NUMBER=$(split_version $STAGE_TAG_LATEST increment_build)
-  #   fi
-  #   NEW_TAG="${PREFIX}${STAGE}/v${STAGE_TAG_FULL}+${STAGE_BUILD_NUMBER}"
-  # fi
-  # create_tag $NEW_TAG
 }
