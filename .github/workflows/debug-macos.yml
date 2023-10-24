@@ -1,0 +1,28 @@
+name: Debug macos
+
+on:
+  workflow_dispatch:
+    inputs:
+      BUILD_ENVIRONMENT_NAME:
+        description: "Environment"
+        required: true
+        default: "development"
+        type: choice
+        options:
+          - development
+          - staging
+          - uat
+          - production
+
+jobs:
+  hello_world_job:
+    runs-on: macos-latest
+    name: SVA macos check
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install script
+        uses: /tuanngocptn/semantic-versioning-action@main
+        with:
+          script: increment

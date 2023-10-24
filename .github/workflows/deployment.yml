@@ -1,0 +1,30 @@
+name: Deployment
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  deployment:
+    runs-on: ubuntu-latest
+    name: Deployment
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Build and Deploy
+        run: |
+          bash build.sh
+          source index.sh
+          config_github_token
+          git add index.sh
+          { 
+            git commit -m "build: Automation Deployment" &&
+            git push origin main
+          } || {
+            echo "Do nothing"
+          }
