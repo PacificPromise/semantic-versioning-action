@@ -39,15 +39,18 @@ split_version() {
 increment() {
   git fetch --all --tags
   STAGE=$1
+  echo 1
   if [[ ! "$STAGE" ]]; then
     PREIOUS_TAG=$(git tag --sort=-version:refname -l | grep 'v\d\+\.\d\+\.\d\+$' | head -n 1)
-
+    echo PREIOUS_TAG
     if ! [ "$PREIOUS_TAG" ]; then
+      echo 2
       create_tag v0.0.1 # v0.0.1 is init tag
       exit 0
     fi
 
     NEW_TAG="v$(split_version $PREIOUS_TAG increment_patche)"
+    echo NEW_TAG
     create_tag $NEW_TAG
     exit 0
   else
