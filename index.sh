@@ -72,7 +72,7 @@ increment() {
   echo 1
   if ! [ "$STAGE" ]; then
     echo 11
-    PREIOUS_TAG=$(git tag --sort=-version:refname -l | grep 'v\d\+\.\d\+\.\d\+$' | head -n 1)
+    PREIOUS_TAG=$(git tag --sort=-version:refname -l | grep -p 'v\d\+\.\d\+\.\d\+$' | head -n 1 || echo "::error::Unexpected version")
     echo $PREIOUS_TAG
     if ! [ "$PREIOUS_TAG" ]; then
       echo 2
