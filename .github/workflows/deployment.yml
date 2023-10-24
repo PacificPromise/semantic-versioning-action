@@ -32,4 +32,4 @@ jobs:
           git fetch --all --tags
           echo 2
           echo "a" | grep a
-          git tag --sort=-version:refname -l | grep -P "v\d\+"
+          git tag --sort=-version:refname -l | grep -P "v\d+"
