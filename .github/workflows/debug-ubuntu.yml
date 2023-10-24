@@ -23,7 +23,7 @@ env:
 jobs:
   increment-patch-env:
     name: Increment patch version
-    if: ${{ inputs.action_name == 'Increment patch version'}}
+    if: ${{ inputs.action_name == 'Increment patch version (1.0.xx)'}}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -36,7 +36,7 @@ jobs:
 
   increment-minor-env:
     name: Increment minor version
-    if: ${{ inputs.action_name == 'Increment minor version'}}
+    if: ${{ inputs.action_name == 'Increment minor version (1.xx.0)'}}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -49,7 +49,7 @@ jobs:
 
   increment-major-env:
     name: Increment major version
-    if: ${{ inputs.action_name == 'Increment major version'}}
+    if: ${{ inputs.action_name == 'Increment major version (xx.0.0)'}}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
