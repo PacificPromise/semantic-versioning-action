@@ -9,7 +9,9 @@ on:
         required: true
         type: choice
         options:
-          - Increment patch version
+          - Increment patch version (1.0.xx)
+          - Increment minor version (1.xx.0)
+          - Increment major version (xx.0.0)
           - Increment development environment
           - Increment staging environment
           - Increment UAT environment
@@ -20,7 +22,7 @@ env:
 
 jobs:
   increment-patch-env:
-    name: SVA patch environment
+    name: Increment patch version
     if: ${{ inputs.action_name == 'Increment patch version'}}
     runs-on: ubuntu-latest
     steps:
@@ -33,7 +35,7 @@ jobs:
           script: increment_core_tag patch
 
   increment-minor-env:
-    name: SVA patch environment
+    name: Increment minor version
     if: ${{ inputs.action_name == 'Increment minor version'}}
     runs-on: ubuntu-latest
     steps:
@@ -46,7 +48,7 @@ jobs:
           script: increment_core_tag minor
 
   increment-major-env:
-    name: SVA patch environment
+    name: Increment major version
     if: ${{ inputs.action_name == 'Increment major version'}}
     runs-on: ubuntu-latest
     steps:
