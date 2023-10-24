@@ -42,32 +42,38 @@ increment() {
   echo 1
   if [[ ! "$STAGE" ]]; then
     PREIOUS_TAG=$(git tag --sort=-version:refname -l | grep 'v\d\+\.\d\+\.\d\+$' | head -n 1)
-    echo PREIOUS_TAG
+    echo $PREIOUS_TAG
     if ! [ "$PREIOUS_TAG" ]; then
       echo 2
       create_tag v0.0.1 # v0.0.1 is init tag
       exit 0
     fi
 
+    echo 3
     NEW_TAG="v$(split_version $PREIOUS_TAG increment_patche)"
-    echo NEW_TAG
+    echo $NEW_TAG
+    echo 4
     create_tag $NEW_TAG
     exit 0
   else
+    echo 5
     PREIOUS_TAG=$(git tag --sort=-version:refname -l "*-${STAGE}+*" | head -n 1)
     if ! [ "$PREIOUS_TAG" ]; then
+      echo 6
       create_tag 'v0.0.1-dev+1' # v0.0.1-dev+1 is init tag
       exit 0
     fi
-
+    echo 7
     MAIN_TAG=$(git tag --sort=-version:refname -l | grep 'v\d\+\.\d\+\.\d\+$' | head -n 1)
     MAIN_TAG=$(split_version $MAIN_TAG increment_patche)
 
     STAGE_TAG_LATEST=$(git tag --sort=-version:refname -l "v${MAIN_TAG}-${STAGE}+*" | head -n 1)
     STAGE_BUILD_NUMBER=1
     if [[ $STAGE_TAG_LATEST ]]; then
+      echo 8
       STAGE_BUILD_NUMBER=$(split_version $STAGE_TAG_LATEST increment_build)
     fi
+    echo 9
     NEW_TAG="v${MAIN_TAG}-${STAGE}+${STAGE_BUILD_NUMBER}"
     create_tag $NEW_TAG
     exit 0
