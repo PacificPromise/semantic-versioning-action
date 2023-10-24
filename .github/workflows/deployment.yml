@@ -1,7 +1,7 @@
 name: Dummy Deployment
 
 on:
-  push:
+  create:
     tags:
       - "v**"
 
