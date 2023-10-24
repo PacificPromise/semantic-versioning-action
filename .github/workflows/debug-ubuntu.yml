@@ -5,13 +5,15 @@ on:
     inputs:
       build_environment_name:
         description: "Environment"
-        default: ""
+        default: "dev"
+        required: true
         type: choice
         options:
           - dev
           - stg
           - uat
           - prd
+          - none
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -19,7 +21,7 @@ env:
 jobs:
   increment-normal:
     name: SVA increment normal
-    if: ${{ !inputs.build_environment_name }}
+    if: ${{ !inputs.build_environment_name || inputs.build_environment_name == 'none'}}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
