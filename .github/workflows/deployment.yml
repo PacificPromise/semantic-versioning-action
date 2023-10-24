@@ -31,4 +31,5 @@ jobs:
           git fetch
           echo "a" | grep a
           abc=$(git tag --sort=-version:refname -l)
+          echo $abc
           echo $abc | grep 'v'
