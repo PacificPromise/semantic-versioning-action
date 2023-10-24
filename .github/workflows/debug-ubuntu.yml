@@ -3,38 +3,25 @@ name: Debug ubuntu
 on:
   workflow_dispatch:
     inputs:
-      build_environment_name:
-        description: "Environment"
+      action_name:
+        description: "Action"
         default: "dev"
         required: true
         type: choice
         options:
-          - dev
-          - stg
-          - uat
-          - prd
-          - none
+          - Increment development environment
+          - Increment staging environment
+          - Increment UAT environment
+          - Increment product environment
+          - Increment patch version
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
-  increment-normal:
-    name: SVA increment normal
-    if: ${{ !inputs.build_environment_name || inputs.build_environment_name == 'none'}}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Install script
-        uses: /tuanngocptn/semantic-versioning-action@main
-        with:
-          script: increment
-
   increment-env:
-    name: SVA increment environment
-    if: ${{ inputs.build_environment_name &&  inputs.build_environment_name != 'none'}}
+    name: SVA patch environment
+    if: ${{ inputs.action_name == 'Increment patch version'}}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -43,4 +30,56 @@ jobs:
       - name: Install script
         uses: /tuanngocptn/semantic-versioning-action@main
         with:
-          script: increment ${{ inputs.build_environment_name }}
+          script: increment_tag
+
+  increment-development-environment:
+    name: Increment development environment
+    if: ${{inputs.action_name == 'Increment development environment'}}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install script
+        uses: /tuanngocptn/semantic-versioning-action@main
+        with:
+          script: increment_tag dev
+
+  increment-staging-environment:
+    name: Increment staging environment
+    if: ${{inputs.action_name == 'Increment staging environment'}}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install script
+        uses: /tuanngocptn/semantic-versioning-action@main
+        with:
+          script: increment_tag stg
+
+  increment-uat-environment:
+    name: Increment UAT environment
+    if: ${{inputs.action_name == 'Increment UAT environment'}}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install script
+        uses: /tuanngocptn/semantic-versioning-action@main
+        with:
+          script: increment_tag uat
+
+  increment-product-environment:
+    name: Increment product environment
+    if: ${{inputs.action_name == 'Increment product environment'}}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install script
+        uses: /tuanngocptn/semantic-versioning-action@main
+        with:
+          script: increment_tag prd
