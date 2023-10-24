@@ -30,7 +30,10 @@ jobs:
         run: echo "Hello world"
 
       - name: Git log
-        run: git log && git describe --tags
+        run: |
+          git fetch --all --tags
+          git log
+          git describe --tags
 
   on-failure:
     runs-on: ubuntu-latest
