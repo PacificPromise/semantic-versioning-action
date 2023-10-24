@@ -1,9 +1,9 @@
 name: Dummy Deployment
 
 on:
-  create:
+  push:
     tags:
-      - "v**"
+      - "*"
 
 jobs:
   hello_world_job:
