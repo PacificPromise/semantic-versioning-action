@@ -5,21 +5,21 @@ on:
     inputs:
       action_name:
         description: "Action"
-        default: "dev"
+        default: "Increment development environment"
         required: true
         type: choice
         options:
+          - Increment patch version
           - Increment development environment
           - Increment staging environment
           - Increment UAT environment
           - Increment product environment
-          - Increment patch version
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
-  increment-env:
+  increment-patch-env:
     name: SVA patch environment
     if: ${{ inputs.action_name == 'Increment patch version'}}
     runs-on: ubuntu-latest
@@ -30,7 +30,33 @@ jobs:
       - name: Install script
         uses: /tuanngocptn/semantic-versioning-action@main
         with:
-          script: increment_tag
+          script: increment_core_tag patch
+
+  increment-minor-env:
+    name: SVA patch environment
+    if: ${{ inputs.action_name == 'Increment minor version'}}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install script
+        uses: /tuanngocptn/semantic-versioning-action@main
+        with:
+          script: increment_core_tag minor
+
+  increment-major-env:
+    name: SVA patch environment
+    if: ${{ inputs.action_name == 'Increment major version'}}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install script
+        uses: /tuanngocptn/semantic-versioning-action@main
+        with:
+          script: increment_core_tag major
 
   increment-development-environment:
     name: Increment development environment

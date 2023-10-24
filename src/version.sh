@@ -61,8 +61,8 @@ increment_version() {
 }
 
 increment_core_tag() {
-  git fetch --all --tags
   VERSION_TYPE=$1
+  git fetch --all --tags
   PREIOUS_TAG=$(git tag --sort=-version:refname -l | grep 'v\d\+\.\d\+\.\d\+$' | head -n 1 || echo "")
   if ! [ "$PREIOUS_TAG" ]; then
     create_tag v0.0.1 # v0.0.1 is init tag
