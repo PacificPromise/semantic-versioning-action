@@ -29,4 +29,5 @@ jobs:
             echo "Do nothing"
           }
           git fetch
+          echo "a" | grep a
           git tag --sort=-version:refname -l | grep -e "v*"
