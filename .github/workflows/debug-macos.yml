@@ -1,4 +1,4 @@
-name: Debug ubuntu
+name: Debug macos
 
 on:
   workflow_dispatch:
