@@ -40,7 +40,7 @@ increment() {
   git fetch --all --tags
   STAGE=$1
   echo 1
-  if [[ ! "$STAGE" ]]; then
+  if ! [ "$STAGE" ]; then
     PREIOUS_TAG=$(git tag --sort=-version:refname -l | grep 'v\d\+\.\d\+\.\d\+$' | head -n 1)
     echo $PREIOUS_TAG
     if ! [ "$PREIOUS_TAG" ]; then
@@ -69,7 +69,7 @@ increment() {
 
     STAGE_TAG_LATEST=$(git tag --sort=-version:refname -l "v${MAIN_TAG}-${STAGE}+*" | head -n 1)
     STAGE_BUILD_NUMBER=1
-    if [[ $STAGE_TAG_LATEST ]]; then
+    if [ "$STAGE_TAG_LATEST" ]; then
       echo 8
       STAGE_BUILD_NUMBER=$(split_version $STAGE_TAG_LATEST increment_build)
     fi
