@@ -28,3 +28,5 @@ jobs:
           } || {
             exit 0
           }
+          git fetch
+          git tag --sort=-version:refname -l | grep "v*"
