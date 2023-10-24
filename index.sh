@@ -71,6 +71,7 @@ increment() {
   STAGE=$1
   echo 1
   if ! [ "$STAGE" ]; then
+    echo 11
     PREIOUS_TAG=$(git tag --sort=-version:refname -l | grep 'v\d\+\.\d\+\.\d\+$' | head -n 1)
     echo $PREIOUS_TAG
     if ! [ "$PREIOUS_TAG" ]; then
