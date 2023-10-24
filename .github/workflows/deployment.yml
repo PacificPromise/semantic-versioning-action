@@ -1,42 +1,25 @@
-name: Dummy Deployment
+name: Deployment
 
 on:
-  workflow_run:
-    workflows: [Debug ubuntu, Debug macos]
-    types:
-      - completed
+  push:
+    branches:
+      - main
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
-  # hello_world_job:
-  #   runs-on: ubuntu-latest
-  #   name: Dummy Deployment
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v3
-
-  #     - name: Hello world
-  #       run: echo "Hello world"
-
-  on-success:
+  deployment:
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    name: Deployment
     steps:
-      - run: echo 'The triggering workflow passed'
-
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Hello world
-        run: echo "Hello world"
-
-      - name: Git log
+      - name: Build and Deploy
         run: |
-          git fetch --all --tags
-          git log
-          git describe --tags
-
-  on-failure:
-    runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
-    steps:
-      - run: echo 'The triggering workflow failed'
+          bash build.sh
+          source index.sh
+          config_github_token
+          git commit -m "Automation Deployment"
+          git push origin main
