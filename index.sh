@@ -95,7 +95,7 @@ increment_core_tag() {
   VERSION_TYPE=$1
   git fetch --all --tags
   echo 2
-  PREIOUS_TAG=$(git tag --sort=-version:refname -l | grep 'v\d\+\.\d\+\.\d\+$' | head -n 1)
+  PREIOUS_TAG=$(git tag --sort=-version:refname -l | grep "v\d\+\.\d\+\.\d\+$" | head -n 1 || echo "")
   echo 3
   if ! [ "$PREIOUS_TAG" ]; then
     echo 4
