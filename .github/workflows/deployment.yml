@@ -23,6 +23,15 @@ jobs:
     steps:
       - run: echo 'The triggering workflow passed'
 
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Hello world
+        run: echo "Hello world"
+
+      - name: Git log
+        run: git log
+
   on-failure:
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'failure' }}
