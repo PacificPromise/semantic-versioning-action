@@ -9,10 +9,11 @@ on:
         default: "development"
         type: choice
         options:
-          - development
-          - staging
+          - dev
+          - stg
           - uat
-          - production
+          - prd
+          - " "
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
