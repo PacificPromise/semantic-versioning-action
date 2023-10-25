@@ -8,13 +8,13 @@ get_stage_prompt() {
   STAGE=""
   select opt in "${options[@]}" "Quit"; do
     case "$REPLY" in
-    1) echo "Choosed option: $opt" && increment_tag dev && break ;;
-    2) echo "Choosed option: $opt" && increment_tag stg && break ;;
-    3) echo "Choosed option: $opt" && increment_tag uat && break ;;
-    4) echo "Choosed option: $opt" && increment_tag prd && break ;;
-    5) echo "Choosed option: $opt" && increment_core_tag patch && break ;;
-    6) echo "Choosed option: $opt" && increment_core_tag minor && break ;;
-    6) echo "Choosed option: $opt" && increment_core_tag major && break ;;
+    1) echo "Chose option: $opt" && increment_tag dev && break ;;
+    2) echo "Chose option: $opt" && increment_tag stg && break ;;
+    3) echo "Chose option: $opt" && increment_tag uat && break ;;
+    4) echo "Chose option: $opt" && increment_tag prd && break ;;
+    5) echo "Chose option: $opt" && increment_core_tag patch && break ;;
+    6) echo "Chose option: $opt" && increment_core_tag minor && break ;;
+    6) echo "Chose option: $opt" && increment_core_tag major && break ;;
     $((${#options[@]} + 1)))
       echo "Goodbye!"
       exit 0
