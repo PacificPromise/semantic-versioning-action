@@ -11,6 +11,8 @@
 ```yml
 - name: Run semantic versioning
   uses: PacificPromise/semantic-versioning-action@main
+  env:
+    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   with:
     script: increment_core_tag patch
 ```
