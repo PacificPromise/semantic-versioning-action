@@ -7,16 +7,6 @@ on:
       - completed
 
 jobs:
-  # hello_world_job:
-  #   runs-on: ubuntu-latest
-  #   name: Dummy Deployment
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v3
-
-  #     - name: Hello world
-  #       run: echo "Hello world"
-
   on-success:
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
