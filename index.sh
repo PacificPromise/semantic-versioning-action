@@ -119,36 +119,36 @@ increment_version() {
 }
 
 get_previous_tag() {
-  PREIOUS_TAG=''
+  PREVIOUS_TAG=''
   if [[ $OSTYPE == 'darwin'* ]]; then
-    PREIOUS_TAG=$(git tag --sort=-version:refname -l | grep 'v\d\+\.\d\+\.\d\+$' | head -n 1 || echo "")
+    PREVIOUS_TAG=$(git tag --sort=-version:refname -l | grep 'v\d\+\.\d\+\.\d\+$' | head -n 1 || echo "")
   else
-    PREIOUS_TAG=$(git tag --sort=-version:refname -l | grep -P "v\d+\.\d+\.\d+$" | head -n 1 || echo "")
+    PREVIOUS_TAG=$(git tag --sort=-version:refname -l | grep -P "v\d+\.\d+\.\d+$" | head -n 1 || echo "")
   fi
-  echo $PREIOUS_TAG
+  echo $PREVIOUS_TAG
 }
 
 get_increment_core_tag() {
   VERSION_TYPE=$1
   git fetch --all --tags
-  PREIOUS_TAG=$(get_previous_tag)
-  if ! [ "$PREIOUS_TAG" ]; then
+  PREVIOUS_TAG=$(get_previous_tag)
+  if ! [ "$PREVIOUS_TAG" ]; then
     echo v0.0.1 # v0.0.1 is init tag
     exit 0
   fi
-  NEW_TAG="v$(increment_version $PREIOUS_TAG $VERSION_TYPE)"
+  NEW_TAG="v$(increment_version $PREVIOUS_TAG $VERSION_TYPE)"
   echo $NEW_TAG
 }
 
 increment_core_tag() {
   VERSION_TYPE=$1
   git fetch --all --tags
-  PREIOUS_TAG=$(get_previous_tag)
-  if ! [ "$PREIOUS_TAG" ]; then
+  PREVIOUS_TAG=$(get_previous_tag)
+  if ! [ "$PREVIOUS_TAG" ]; then
     create_tag v0.0.1 # v0.0.1 is init tag
     exit 0
   fi
-  NEW_TAG="v$(increment_version $PREIOUS_TAG $VERSION_TYPE)"
+  NEW_TAG="v$(increment_version $PREVIOUS_TAG $VERSION_TYPE)"
   create_tag $NEW_TAG
 }
 
@@ -156,13 +156,13 @@ increment_tag() {
   git fetch --all --tags
   STAGE=$1
   if ! [ "$STAGE" ]; then
-    PREIOUS_TAG=$(get_previous_tag)
-    if ! [ "$PREIOUS_TAG" ]; then
+    PREVIOUS_TAG=$(get_previous_tag)
+    if ! [ "$PREVIOUS_TAG" ]; then
       create_tag v0.0.1 # v0.0.1 is init tag
       exit 0
     fi
 
-    NEW_TAG="v$(increment_version $PREIOUS_TAG patch)"
+    NEW_TAG="v$(increment_version $PREVIOUS_TAG patch)"
     create_tag $NEW_TAG
     exit 0
   else
