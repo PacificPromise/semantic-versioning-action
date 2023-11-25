@@ -128,12 +128,23 @@ get_previous_tag() {
   echo $PREIOUS_TAG
 }
 
+get_increment_core_tag() {
+  VERSION_TYPE=$1
+  git fetch --all --tags
+  PREIOUS_TAG=$(get_previous_tag)
+  if ! [ "$PREIOUS_TAG" ]; then
+    echo v0.0.1 # v0.0.1 is init tag
+    exit 0
+  fi
+  NEW_TAG="v$(increment_version $PREIOUS_TAG $VERSION_TYPE)"
+  echo $NEW_TAG
+}
+
 increment_core_tag() {
   VERSION_TYPE=$1
   git fetch --all --tags
   PREIOUS_TAG=$(get_previous_tag)
   if ! [ "$PREIOUS_TAG" ]; then
-    echo $PREIOUS_TAG
     create_tag v0.0.1 # v0.0.1 is init tag
     exit 0
   fi
