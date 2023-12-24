@@ -75,7 +75,7 @@ get_previous_tag() {
   fi
 
   if [[ $OSTYPE == 'msys'* ]]; then
-    PREVIOUS_TAG=$(git tag --sort=-version:refname -l | grep 'v\d\+\.\d\+\.\d\+$' | head -n 1 || echo "")
+    PREVIOUS_TAG=$(git tag --sort=-version:refname -l | findstr 'v\d\+\.\d\+\.\d\+$' | head -n 1 || echo "")
   fi
 
   echo $PREVIOUS_TAG
