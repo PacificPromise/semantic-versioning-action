@@ -13,6 +13,7 @@ runs:
     - name: Init SVA
       shell: bash
       run: |
+        echo $OSTYPE
         cd "${{ github.action_path }}"
         source index.sh
         cd "${{ github.workspace }}"
