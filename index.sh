@@ -122,9 +122,16 @@ get_previous_tag() {
   PREVIOUS_TAG=''
   if [[ $OSTYPE == 'darwin'* ]]; then
     PREVIOUS_TAG=$(git tag --sort=-version:refname -l | grep 'v\d\+\.\d\+\.\d\+$' | head -n 1 || echo "")
-  else
+  fi
+
+  if [[ $OSTYPE == 'linux'* ]]; then
     PREVIOUS_TAG=$(git tag --sort=-version:refname -l | grep -P "v\d+\.\d+\.\d+$" | head -n 1 || echo "")
   fi
+
+  if [[ $OSTYPE == 'msys'* ]]; then
+    PREVIOUS_TAG=$(git tag --sort=-version:refname -l | grep -P "v\d+\.\d+\.\d+$" | head -n 1 || echo "")
+  fi
+
   echo $PREVIOUS_TAG
 }
 
@@ -132,6 +139,7 @@ get_increment_core_tag() {
   VERSION_TYPE=$1
   git fetch --all --tags
   PREVIOUS_TAG=$(get_previous_tag)
+  echo ${PREVIOUS_TAG}
   if ! [ "$PREVIOUS_TAG" ]; then
     echo v0.0.1 # v0.0.1 is init tag
     exit 0
