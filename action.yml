@@ -13,24 +13,16 @@ runs:
     - name: Init SVA
       shell: bash
       run: |
-        ACTION_PATH=${{ github.action_path }}
-        ACTION_PATH="${ACTION_PATH//\\/\/}"
-        WORKSPACE_PATH=${{ github.workspace }}
-        WORKSPACE_PATH="${WORKSPACE_PATH//\\/\/}"
-        cd $ACTION_PATH
+        cd "${{ github.action_path }}"
         source index.sh
-        cd $WORKSPACE_PATH
+        cd "${{ github.workspace }}"
         health_check
 
     - name: Run user script
       shell: bash
       run: |
-        ACTION_PATH=${{ github.action_path }}
-        ACTION_PATH="${ACTION_PATH//\\/\/}"
-        WORKSPACE_PATH=${{ github.workspace }}
-        WORKSPACE_PATH="${WORKSPACE_PATH//\\/\/}"
-        cd $ACTION_PATH
+        cd "${{ github.action_path }}"
         source index.sh
-        cd $WORKSPACE_PATH
+        cd "${{ github.workspace }}"
         config_github_token 
         ${{ inputs.script }}
