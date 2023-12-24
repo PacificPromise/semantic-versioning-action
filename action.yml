@@ -10,17 +10,12 @@ inputs:
 runs:
   using: "composite"
   steps:
-    # - name: Init SVA
-    #   shell: bash
-    #   run: |
-    #     cd ${{ github.action_path }}
-    #     source index.sh
-    #     health_check
-
     - name: Init SVA
       shell: bash
       run: |
+        cd ${{ github.action_path }}
         source index.sh
+        cd ${{ github.workspace }}
         health_check
 
     - name: Run user script
