@@ -1,4 +1,4 @@
-name: Debug macos
+name: Debug wibdows
 
 on:
   workflow_dispatch:

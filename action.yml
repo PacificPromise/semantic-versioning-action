@@ -13,6 +13,7 @@ runs:
     - name: Init SVA
       shell: bash
       run: |
+        cat ${{ github.action_path }}/index.sh
         source ${{ github.action_path }}/index.sh
         health_check
 
