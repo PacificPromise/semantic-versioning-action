@@ -143,7 +143,6 @@ get_increment_core_tag() {
   VERSION_TYPE=$1
   git fetch --all --tags
   PREVIOUS_TAG=$(get_previous_tag)
-  echo ${PREVIOUS_TAG}
   if ! [ "$PREVIOUS_TAG" ]; then
     echo v0.0.1 # v0.0.1 is init tag
     exit 0
