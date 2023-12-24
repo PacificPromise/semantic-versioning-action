@@ -13,13 +13,15 @@ runs:
     - name: Init SVA
       shell: bash
       run: |
-        cat ${{ github.action_path }}/index.sh
-        source ${{ github.action_path }}/index.sh
+        cd ${{ github.action_path }}
+        source index.sh
         health_check
 
     - name: Run user script
       shell: bash
       run: |
-        source ${{ github.action_path }}/index.sh 
+        cd ${{ github.action_path }}
+        source index.sh
+        cd ${{ github.workspace }}
         config_github_token 
         ${{ inputs.script }}
