@@ -69,7 +69,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Install script
-        uses: PacificPromise/semantic-versioning-action@6d5d5a79f26358824f4c85269f06a45fbe68767e
+        uses: PacificPromise/semantic-versioning-action@dac8b5dd4328de643a4efd643ca5b11a0c976a72
         with:
           script: increment_tag dev
 
