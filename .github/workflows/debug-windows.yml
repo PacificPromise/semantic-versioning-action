@@ -1,0 +1,113 @@
+name: Debug macos
+
+on:
+  workflow_dispatch:
+    inputs:
+      action_name:
+        description: "Action"
+        default: "Increment development environment"
+        required: true
+        type: choice
+        options:
+          - Increment patch version (1.0.xx)
+          - Increment minor version (1.xx.0)
+          - Increment major version (xx.0.0)
+          - Increment development environment
+          - Increment staging environment
+          - Increment UAT environment
+          - Increment product environment
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  increment-patch-env:
+    name: Increment patch version
+    if: ${{ inputs.action_name == 'Increment patch version (1.0.xx)'}}
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install script
+        uses: PacificPromise/semantic-versioning-action@main
+        with:
+          script: increment_core_tag patch
+
+  increment-minor-env:
+    name: Increment minor version
+    if: ${{ inputs.action_name == 'Increment minor version (1.xx.0)'}}
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install script
+        uses: PacificPromise/semantic-versioning-action@main
+        with:
+          script: increment_core_tag minor
+
+  increment-major-env:
+    name: Increment major version
+    if: ${{ inputs.action_name == 'Increment major version (xx.0.0)'}}
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install script
+        uses: PacificPromise/semantic-versioning-action@main
+        with:
+          script: increment_core_tag major
+
+  increment-development-environment:
+    name: Increment development environment
+    if: ${{inputs.action_name == 'Increment development environment'}}
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install script
+        uses: PacificPromise/semantic-versioning-action@main
+        with:
+          script: increment_tag dev
+
+  increment-staging-environment:
+    name: Increment staging environment
+    if: ${{inputs.action_name == 'Increment staging environment'}}
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install script
+        uses: PacificPromise/semantic-versioning-action@main
+        with:
+          script: increment_tag stg
+
+  increment-uat-environment:
+    name: Increment UAT environment
+    if: ${{inputs.action_name == 'Increment UAT environment'}}
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install script
+        uses: PacificPromise/semantic-versioning-action@main
+        with:
+          script: increment_tag uat
+
+  increment-product-environment:
+    name: Increment product environment
+    if: ${{inputs.action_name == 'Increment product environment'}}
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install script
+        uses: PacificPromise/semantic-versioning-action@main
+        with:
+          script: increment_tag prd
