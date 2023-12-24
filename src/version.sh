@@ -24,7 +24,11 @@ split_version() {
     echo ${VERSION_ARRAY[3]}
     ;;
   next_build)
-    echo ${VERSION_ARRAY[3]} + 1 | bc
+    if [[ $OSTYPE == 'msys'* ]]; then
+      echo ${VERSION_ARRAY[3]} + 1
+    else
+      echo ${VERSION_ARRAY[3]} + 1 | bc
+    fi
     ;;
   esac
 }
