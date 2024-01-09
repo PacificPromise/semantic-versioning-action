@@ -14,7 +14,7 @@ get_stage_prompt() {
     4) echo "Chose option: $opt" && increment_tag prd && break ;;
     5) echo "Chose option: $opt" && increment_core_tag patch && break ;;
     6) echo "Chose option: $opt" && increment_core_tag minor && break ;;
-    6) echo "Chose option: $opt" && increment_core_tag major && break ;;
+    7) echo "Chose option: $opt" && increment_core_tag major && break ;;
     $((${#options[@]} + 1)))
       echo "Goodbye!"
       exit 0
