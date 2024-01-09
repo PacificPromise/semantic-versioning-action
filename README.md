@@ -40,7 +40,7 @@ source /dev/stdin <<<"$(curl -s https://raw.githubusercontent.com/PacificPromise
 
 ```
 
-- Run that file with bash
+- Run that file with bash (on Windows with [git bash](https://gitforwindows.org/))
 
 ```sh
 bash run_sample.sh
