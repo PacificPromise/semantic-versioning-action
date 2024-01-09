@@ -14,7 +14,7 @@ delete_tag() {
 }
 
 remove_all_tag() {
-  git fetch --all --tags
+  git fetch --tags
   git push origin --delete $(git tag -l)
   git tag -d $(git tag -l)
 }

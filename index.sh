@@ -14,7 +14,7 @@ get_stage_prompt() {
     4) echo "Chose option: $opt" && increment_tag prd && break ;;
     5) echo "Chose option: $opt" && increment_core_tag patch && break ;;
     6) echo "Chose option: $opt" && increment_core_tag minor && break ;;
-    6) echo "Chose option: $opt" && increment_core_tag major && break ;;
+    7) echo "Chose option: $opt" && increment_core_tag major && break ;;
     $((${#options[@]} + 1)))
       echo "Goodbye!"
       exit 0
@@ -42,7 +42,7 @@ delete_tag() {
 }
 
 remove_all_tag() {
-  git fetch --all --tags
+  git fetch --tags
   git push origin --delete $(git tag -l)
   git tag -d $(git tag -l)
 }
@@ -82,7 +82,7 @@ split_version() {
     echo ${VERSION_ARRAY[3]}
     ;;
   next_build)
-    echo ${VERSION_ARRAY[3]} + 1 | bc
+    echo $((VERSION_ARRAY[3] + 1))
     ;;
   esac
 }
@@ -122,15 +122,22 @@ get_previous_tag() {
   PREVIOUS_TAG=''
   if [[ $OSTYPE == 'darwin'* ]]; then
     PREVIOUS_TAG=$(git tag --sort=-version:refname -l | grep 'v\d\+\.\d\+\.\d\+$' | head -n 1 || echo "")
-  else
+  fi
+
+  if [[ $OSTYPE == 'linux'* ]]; then
     PREVIOUS_TAG=$(git tag --sort=-version:refname -l | grep -P "v\d+\.\d+\.\d+$" | head -n 1 || echo "")
   fi
+
+  if [[ $OSTYPE == 'msys'* ]]; then
+    PREVIOUS_TAG=$(git tag --sort=-version:refname -l | grep -P "v\d+\.\d+\.\d+$" | head -n 1 || echo "")
+  fi
+
   echo $PREVIOUS_TAG
 }
 
 get_increment_core_tag() {
   VERSION_TYPE=$1
-  git fetch --all --tags
+  git fetch --tags
   PREVIOUS_TAG=$(get_previous_tag)
   if ! [ "$PREVIOUS_TAG" ]; then
     echo v0.0.1 # v0.0.1 is init tag
@@ -142,7 +149,7 @@ get_increment_core_tag() {
 
 increment_core_tag() {
   VERSION_TYPE=$1
-  git fetch --all --tags
+  git fetch --tags
   PREVIOUS_TAG=$(get_previous_tag)
   if ! [ "$PREVIOUS_TAG" ]; then
     create_tag v0.0.1 # v0.0.1 is init tag
@@ -153,7 +160,7 @@ increment_core_tag() {
 }
 
 increment_tag() {
-  git fetch --all --tags
+  git fetch --tags
   STAGE=$1
   if ! [ "$STAGE" ]; then
     PREVIOUS_TAG=$(get_previous_tag)
