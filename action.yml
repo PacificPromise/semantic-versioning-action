@@ -13,17 +13,12 @@ runs:
     - name: Init SVA
       shell: bash
       run: |
-        echo $OSTYPE
-        cd "${{ github.action_path }}"
-        source index.sh
-        cd "${{ github.workspace }}"
+        source ${{ github.action_path }}/index.sh
         health_check
 
     - name: Run user script
       shell: bash
       run: |
-        cd "${{ github.action_path }}"
-        source index.sh
-        cd "${{ github.workspace }}"
+        source ${{ github.action_path }}/index.sh 
         config_github_token 
         ${{ inputs.script }}
