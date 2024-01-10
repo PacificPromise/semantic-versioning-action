@@ -21,7 +21,7 @@ jobs:
 
       - name: Git log
         run: |
-          git fetch --tags
+          git fetch --all --tags 
           git log
           git describe --tags --abbrev=0
 
