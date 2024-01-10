@@ -79,7 +79,7 @@ get_previous_tag() {
 
 get_increment_core_tag() {
   VERSION_TYPE=$1
-  git fetch --all --tags
+  git fetch --all --tags --force
   PREVIOUS_TAG=$(get_previous_tag)
   if ! [ "$PREVIOUS_TAG" ]; then
     echo v0.0.1 # v0.0.1 is init tag
@@ -91,7 +91,7 @@ get_increment_core_tag() {
 
 increment_core_tag() {
   VERSION_TYPE=$1
-  git fetch --all --tags
+  git fetch --all --tags --force
   PREVIOUS_TAG=$(get_previous_tag)
   if ! [ "$PREVIOUS_TAG" ]; then
     create_tag v0.0.1 # v0.0.1 is init tag
@@ -102,7 +102,7 @@ increment_core_tag() {
 }
 
 increment_tag() {
-  git fetch --all --tags
+  git fetch --all --tags --force
   STAGE=$1
   if ! [ "$STAGE" ]; then
     PREVIOUS_TAG=$(get_previous_tag)
