@@ -21,93 +21,28 @@ env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
-  increment-patch-env:
-    name: Increment patch version
-    if: ${{ inputs.action_name == 'Increment patch version (1.0.xx)'}}
+  increment-version:
+    name: Increment version
     runs-on: macos-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Install script
-        uses: PacificPromise/semantic-versioning-action@main
+      - name: Get stage key
+        uses: dkershner6/switch-case-action@v1
+        id: switch-case
         with:
-          script: increment_core_tag patch
+          default: "none"
+          conditionals-with-values: |
+            ${{ inputs.action_name == 'Increment patch version (1.0.xx)' }} => increment_core_tag patch
+            ${{ inputs.action_name == 'Increment minor version (1.xx.0)' }} => increment_core_tag minor
+            ${{ inputs.action_name == 'Increment major version (xx.0.0)' }} => increment_core_tag major
+            ${{ inputs.action_name == 'Increment development environment' }} => increment_tag dev
+            ${{ inputs.action_name == 'Increment staging environment' }} => increment_tag stg
+            ${{ inputs.action_name == 'Increment product environment' }} => increment_tag prd
 
-  increment-minor-env:
-    name: Increment minor version
-    if: ${{ inputs.action_name == 'Increment minor version (1.xx.0)'}}
-    runs-on: macos-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Install script
+      - name: Increment
         uses: PacificPromise/semantic-versioning-action@main
+        if: ${{ steps.switch-case.outputs.value != 'none' }}
         with:
-          script: increment_core_tag minor
-
-  increment-major-env:
-    name: Increment major version
-    if: ${{ inputs.action_name == 'Increment major version (xx.0.0)'}}
-    runs-on: macos-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Install script
-        uses: PacificPromise/semantic-versioning-action@main
-        with:
-          script: increment_core_tag major
-
-  increment-development-environment:
-    name: Increment development environment
-    if: ${{inputs.action_name == 'Increment development environment'}}
-    runs-on: macos-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Install script
-        uses: PacificPromise/semantic-versioning-action@main
-        with:
-          script: increment_tag dev
-
-  increment-staging-environment:
-    name: Increment staging environment
-    if: ${{inputs.action_name == 'Increment staging environment'}}
-    runs-on: macos-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Install script
-        uses: PacificPromise/semantic-versioning-action@main
-        with:
-          script: increment_tag stg
-
-  increment-uat-environment:
-    name: Increment UAT environment
-    if: ${{inputs.action_name == 'Increment UAT environment'}}
-    runs-on: macos-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Install script
-        uses: PacificPromise/semantic-versioning-action@main
-        with:
-          script: increment_tag uat
-
-  increment-product-environment:
-    name: Increment product environment
-    if: ${{inputs.action_name == 'Increment product environment'}}
-    runs-on: macos-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Install script
-        uses: PacificPromise/semantic-versioning-action@main
-        with:
-          script: increment_tag prd
+          script: ${{ steps.switch-case.outputs.value }}
