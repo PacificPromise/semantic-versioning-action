@@ -123,6 +123,11 @@ increment_tag() {
     MAIN_TAG_INCREMENT_PATCH=$(increment_version $MAIN_TAG patch)
 
     STAGE_TAG_LATEST=$(git tag --sort=-version:refname -l "v${MAIN_TAG_INCREMENT_PATCH}-${STAGE}+*" | head -n 1)
+
+    if [[ $STAGE == 'prd'* ]]; then # Check previous production tag
+      STAGE_TAG_LATEST=$(git tag --sort=-version:refname -l "v[0-9]*.[0-9]*.[0-9]*-${STAGE}+[0-9]*" | head -n 1)
+    fi
+
     STAGE_BUILD_NUMBER=1
     if [ "$STAGE_TAG_LATEST" ]; then
       STAGE_BUILD_NUMBER=$(split_version $STAGE_TAG_LATEST next_build)
