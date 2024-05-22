@@ -1,5 +1,8 @@
 name: "Semantic Version Action (SVA)"
 description: "Semantic version without any version file"
+branding:
+  icon: "activity"
+  color: "green"
 
 inputs:
   script:
