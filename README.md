@@ -65,4 +65,11 @@ To github.com:tuanngocptn/semantic-versioning-action.git
  * [new tag]         v5.0.4-dev+1 -> v5.0.4-dev+1
 ```
 
+## Contributors ✨
+
+Thanks go to these wonderful people:
+
+<!-- readme: collaborators,contributors -start -->
+<!-- readme: collaborators,contributors -end -->
+
 ### Thanks for using Semantic Versioning Action
