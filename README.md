@@ -74,17 +74,17 @@ Thanks go to these wonderful people:
 	<tbody>
 		<tr>
             <td align="center">
-                <a href="https://github.com/baronha">
-                    <img src="https://avatars.githubusercontent.com/u/23580920?v=4" width="100;" alt="baronha"/>
-                    <br />
-                    <sub><b>Bảo Hà.</b></sub>
-                </a>
-            </td>
-            <td align="center">
                 <a href="https://github.com/tuanngocptn">
                     <img src="https://avatars.githubusercontent.com/u/22292704?v=4" width="100;" alt="tuanngocptn"/>
                     <br />
                     <sub><b>Nick - Ngoc Pham</b></sub>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/baronha">
+                    <img src="https://avatars.githubusercontent.com/u/23580920?v=4" width="100;" alt="baronha"/>
+                    <br />
+                    <sub><b>Bảo Hà.</b></sub>
                 </a>
             </td>
 		</tr>
