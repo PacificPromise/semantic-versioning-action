@@ -84,13 +84,6 @@ Thanks go to these wonderful people:
                     <sub><b>Nick - Ngoc Pham</b></sub>
                 </a>
             </td>
-            <td align="center">
-                <a href="https://github.com/baronha">
-                    <img src="https://avatars.githubusercontent.com/u/23580920?v=4" width="100;" alt="baronha"/>
-                    <br />
-                    <sub><b>Bảo Hà.</b></sub>
-                </a>
-            </td>
 		</tr>
 	<tbody>
 </table>
